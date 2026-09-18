@@ -159,7 +159,43 @@
   }
   .map-slot .plus { font-size: 1.6rem; font-family: 'Fraunces', serif; }
   .map-slot span.label { font-size: 0.78rem; text-align: center; padding: 0 12px; }
+
+  .map-card {
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--line);
+    background: var(--paper-deep);
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+  }
+  .map-card img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.35s ease;
+  }
+  .map-card:hover img { transform: scale(1.06); }
+  .map-card figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(31,42,29,0.82), rgba(31,42,29,0));
+    color: var(--paper);
+    font-size: 0.76rem;
+    padding: 22px 12px 10px;
+  }
+
   .maps-note { margin-top: 22px; color: var(--ink-soft); font-size: 0.92rem; max-width: 62ch; }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(31,42,29,0.92);
+    align-items: center; justify-content: center;
+    padding: 40px 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 28px; color: var(--paper);
+    font-size: 2rem; cursor: pointer; line-height: 1; font-family: 'Space Grotesk', sans-serif;
+  }
 
   /* ---------- Education / Certifications ---------- */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
@@ -390,16 +426,30 @@
       <span class="tag">GALLERY</span>
     </div>
     <div class="maps-grid">
-      <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
-      <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
+
+      <figure class="map-card" onclick="openLightbox('images/tunga-ingaladi-kbp-map.jpg')">
+        <img src="images/tunga-ingaladi-kbp-map.jpg" alt="Resurveyed map of Kuvempu Smaraka Jaivika Dhamada Meesalu Aranya, Ingaladi Village, Section 4 KFA-1963" loading="lazy">
+        <figcaption>Ingaladi Village — Kuvempu Bio Reserve resurvey map</figcaption>
+      </figure>
+
+      <figure class="map-card" onclick="openLightbox('images/tunga-agumbe-forest-map.jpg')">
+        <img src="images/tunga-agumbe-forest-map.jpg" alt="Map showing planting activity in 10-40% canopy density area of Agumbe Range, Shimoga Division" loading="lazy">
+        <figcaption>Agumbe Range — canopy density &amp; planting activity map</figcaption>
+      </figure>
+
       <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
       <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
       <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
       <div class="map-slot"><span class="plus">+</span><span class="label">Add map image</span></div>
     </div>
-    <p class="maps-note">Space reserved for thematic maps, NDVI outputs, cadastral overlays, and other cartographic work — drop in screenshots from ArcGIS, QGIS, or Earth Engine here once ready.</p>
+    <p class="maps-note">More thematic maps, NDVI outputs, and cadastral overlays coming soon — drop in screenshots from ArcGIS, QGIS, or Earth Engine into the remaining slots once ready.</p>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="Enlarged map">
+</div>
 
 <section id="education">
   <div class="wrap">
@@ -456,6 +506,17 @@
     <span>GIS &amp; Remote Sensing · Google Earth Engine · Python</span>
   </div>
 </footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+</script>
 
 </body>
 </html>
