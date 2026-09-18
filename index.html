@@ -70,8 +70,32 @@
   .nav-links a:hover::after { width: 100%; }
 
   /* ---------- Hero ---------- */
-  .hero { position: relative; padding: 100px 0 84px; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.5; }
+  .hero { position: relative; padding: 130px 0 110px; overflow: hidden; }
+
+  .hero-photos { position: absolute; inset: 0; z-index: 0; }
+  .hero-photos .photo {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center 30%;
+    opacity: 0;
+    animation: heroFade 14s infinite;
+  }
+  .hero-photos .photo:nth-child(1) { animation-delay: 0s; }
+  .hero-photos .photo:nth-child(2) { animation-delay: 7s; }
+  @keyframes heroFade {
+    0%   { opacity: 0; }
+    6%   { opacity: 1; }
+    46%  { opacity: 1; }
+    54%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(100deg, rgba(234,230,217,0.97) 0%, rgba(234,230,217,0.93) 32%, rgba(234,230,217,0.62) 58%, rgba(90,100,60,0.35) 100%),
+      linear-gradient(to top, rgba(31,42,29,0.25), rgba(31,42,29,0) 40%);
+  }
+
+  .hero-bg { position: absolute; inset: 0; z-index: 2; opacity: 0.4; }
   .hero-bg path {
     fill: none; stroke: var(--ink-soft); stroke-width: 1; opacity: 0.35;
     stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: draw 2.8s ease-out forwards;
@@ -83,7 +107,7 @@
   @keyframes draw { to { stroke-dashoffset: 0; } }
 
   .hero-content {
-    position: relative; z-index: 1; opacity: 0; transform: translateY(14px);
+    position: relative; z-index: 3; opacity: 0; transform: translateY(14px);
     animation: rise 0.8s ease-out 0.3s forwards;
   }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
@@ -92,6 +116,20 @@
   .hero h1 { font-size: clamp(2.1rem, 5.2vw, 3.2rem); max-width: 16ch; }
   .hero .role { margin-top: 16px; font-size: 1.1rem; color: var(--ink-soft); max-width: 52ch; }
   .hero-actions { margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .hero-photo-credit {
+    position: relative; z-index: 3; margin-top: 40px;
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--ink-soft); opacity: 0.75;
+  }
+
+  @media (max-width: 700px) {
+    .hero { padding: 90px 0 70px; }
+    .hero-overlay {
+      background:
+        linear-gradient(180deg, rgba(234,230,217,0.97) 0%, rgba(234,230,217,0.95) 55%, rgba(234,230,217,0.85) 100%),
+        linear-gradient(to top, rgba(31,42,29,0.25), rgba(31,42,29,0) 40%);
+    }
+  }
 
   .btn {
     display: inline-block; padding: 11px 20px; text-decoration: none; font-size: 0.92rem;
@@ -252,6 +290,11 @@
 </nav>
 
 <header class="hero">
+  <div class="hero-photos" aria-hidden="true">
+    <div class="photo" style="background-image: url('hero-fieldwork-total-station.jpg');"></div>
+    <div class="photo" style="background-image: url('hero-fieldwork-gps-rover.jpg');"></div>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
   <svg class="hero-bg" viewBox="0 0 900 500" preserveAspectRatio="none" aria-hidden="true">
     <path d="M -50 420 C 150 380, 250 460, 450 400 S 750 340, 950 400" />
     <path d="M -50 460 C 180 420, 260 480, 470 440 S 760 390, 950 450" />
@@ -268,6 +311,7 @@
       <a href="#contact" class="btn">Get in touch</a>
     </div>
   </div>
+  <div class="wrap hero-photo-credit">FIELD SURVEY — TOTAL STATION &amp; GNSS ROVER, ON-SITE</div>
 </header>
 
 <section id="about">
